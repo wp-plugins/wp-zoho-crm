@@ -75,10 +75,10 @@ This is the basic version. Tested and found works well without any issues.
 == Upgrade Notice ==
 
 = 1.1.0 =
-* Upgrade now for Bug fixes and improvements
+Upgrade now for Bug fixes and improvements
 
 = 1.0.0 =
-* Initial release.
+Initial release.
 
 == Frequently Asked Questions ==
 
