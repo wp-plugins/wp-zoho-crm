@@ -171,7 +171,7 @@ class SmackWPZohoCrmAdminPages{
 					</p>
 				</td>
 				<td>
-				<input type="button" style="float:left;" value="<?php _e('Sync Now');?>" class="button-secondary submit-add-to-menu" onclick="upgradetopro();"/>
+				<input type="button" style="float:left;" value="<?php _e('Sync Now');?>" class="button-primary submit-add-to-menu" onclick="upgradetopro();"/>
 				<img style="display:none; float:left; padding-top:5px; padding-left:5px;" id="loading-image" src="<?php echo $imagepath.'loading-indicator.gif';?>" />
 				</td>
 
@@ -191,6 +191,8 @@ class SmackWPZohoCrmAdminPages{
 
 
 	function plugin_settings() {
+               global $plugin_dir_wp_zoho_crm;
+               global $plugin_url_wp_zoho_crm;
 
 		$fieldNames = array(
 				'username' => __('Username'),
@@ -202,6 +204,7 @@ class SmackWPZohoCrmAdminPages{
                 {
                         include_once($plugin_dir_wp_zoho_crm."getFields.php");
                 }
+                     $imagepath = "{$plugin_url_wp_zoho_crm}/images/";
 
 		if (sizeof ( $_POST ) && isset ( $_POST ["smack_vtlc_hidden"] )) {
 			
@@ -229,7 +232,7 @@ class SmackWPZohoCrmAdminPages{
 		$config = get_option ( 'smack_zoho_crm_settings' );
 		$config_field = get_option ( "smack_zoho_crm_field_settings" );
 		
-		$content = '<div style="width:95%">
+		$content = '<div style="width:95%"><span id="error_msg"></span>
 				<div style="float:left">';
 		
 		if (! isset ( $config_field ['fieldlist'] )) {
@@ -238,7 +241,7 @@ class SmackWPZohoCrmAdminPages{
 							method="post">';
 		} else {
 			$content .= '<form class="left-side-content" id="smack_vtlc_form" 
-							action="' . $_SERVER ['REQUEST_URI'] . '" method="post">';
+							action="' . $_SERVER ['REQUEST_URI'] . 'method="post" >';
 		}
 			if(isset($_POST['Submit']) && $_POST['Submit'] == 'Save Settings'){ ?>
 				<script>
@@ -267,23 +270,9 @@ class SmackWPZohoCrmAdminPages{
 								</tr>
 							</table>
 						</div>
-						<table>
-							<tr>
-								<td class="smack_settings_td_label"><input type="button"
-									class="button" value="Get Authenticataion Token Key"
-									onclick="testZohoCrmCredentials(\'' . $siteurl . '\');" /></td>
-								<td id="smack-database-test-results"></td>
-							</tr>
-						
-						</table>
 						<div id=vtigersettings>
-							<table>
-								<tr>
-									<td class="smack_settings_td_label"><label>Authenticataion Key</label></td>
-									<td><input class="smack_settings_input_text" type="text" id="authkey"
-										name="authkey" value="' . $config ['authkey'] . '" /></td>
-								</tr>
-							</table>
+						<input class="smack_settings_input_text" type="hidden" id="authkey"
+						name="authkey" value="' . $config ['authkey'] . '" />
 							<br />
 							<h3>Capturing WordPress users</h3>
 							<table>
@@ -309,7 +298,7 @@ class SmackWPZohoCrmAdminPages{
 								<div style="float: right; padding-left: 5px;">:</div>
 							</td>
 							<td><input type="button" value="Sync"
-								class="button-secondary submit-add-to-menu"
+								class="button-primary submit-add-to-menu"
 								onclick="captureAlreadyRegisteredUsersWpTiger();" />
 								<div id="please-upgrade" style="position: absolute; z-index: 100;"></div>
 							</td>
@@ -320,19 +309,27 @@ class SmackWPZohoCrmAdminPages{
 						</div>
 						<input type="hidden" name="posted" value="Posted">
 						<p class="submit">
-							<input name="Submit" type="submit" value="Save Settings" class="button-primary" />
-						</p>
-						<div id="vt_fields_container"></div>
+							<input name="Submit" type="button" value="Save Settings" class="button-primary" onclick="testZohoCrmCredentials(\''.$siteurl.'\');"/> <img id="vt_fields_container" style="display:none;" src="' . $imagepath . 'loading-indicator.gif" onclick="upgradetopro()" />';
+                                              if(isset($field['fieldlabel'])){
+                                                 $content.='<span style="color:green; font-weight: bold;">Settings are Saved Page.Please Click Fetch CRM Fields for get the Zoho CRM Fields</span>';
+						}
+                                                   $content.='</p>
+						<!-- <div id="vt_fields_container"></div> -->
 						</form>';
 	$smack_zoho_crm_settings_array = get_option("smack_zoho_crm_settings");
 	if( (isset($smack_zoho_crm_settings_array['username']) && ($smack_zoho_crm_settings_array['username'] != '')) && (isset($smack_zoho_crm_settings_array['password']) && ($smack_zoho_crm_settings_array['password'] != '')) && (isset($smack_zoho_crm_settings_array['authkey']) && ($smack_zoho_crm_settings_array['authkey'] != '') ) )
 	{
 		$content.= '<form action="" method="POST" name="synccrmfields">
-			<input type="submit" class="button-secondary submit-add-to-menu" name="sync_crm_fields" value="Fetch CRM Fields"/>';
+			<input type="submit" class="button-primary submit-add-to-menu" name="sync_crm_fields" onclick="sync_zoho()"value="Fetch CRM Fields"/><img id="zoho_fetch" style="display:none;" src="' . $imagepath . 'loading-indicator.gif" onclick="upgradetopro()" /> ';
+                          
 		if(isset($_REQUEST['sync_crm_fields']) && ($_REQUEST['sync_crm_fields'] == "Fetch CRM Fields"))
                 {
-			$content .= "<span style='color:green; font-weight: bold;'>Crm Fields Synced</span>";
+			$content .= "<span style='color:green; font-weight: bold;'>Zoho CRM Fields are Synced</span>";
 		}
+                /*  if(isset($field['fieldlabel']))
+                   {
+                     $content .="<span style='color:green;font-weight:bold;'>Zoho CRM Fields are Synced</span>";
+                    }*/
 		$content .= '</form>';
 	}
 $content .= '</div>
@@ -341,7 +338,7 @@ $content .= '</div>
 	<p><h3>How To Configure WP-Tiger in wordpress?</h3></p>
 	<iframe width="560" height="315" src="//www.youtube.com/embed/lX0evNGL5tc?list=PL2k3Ck1bFtbR7d8nRq-oc5iMDBm2ITWuX" frameborder="0" allowfullscreen></iframe>
 	</div>
---
+-->
 	</div>';
 		echo $content;
 	//	echo rightSideContent ();
@@ -365,7 +362,7 @@ $content .= '</div>
 		$imagepath = "{$plugin_url_wp_zoho_crm}/images/";
 	
 		if (isset ( $_POST ['widget_field_posted'] )) {
-			$config_widget_field ['widgetfieldlist'] = array ();
+			$config_widget_field ['widgetfieldlist'] = array();
 			if (isset ( $_POST ['no_of_vt_fields'] )) {
 				$fieldArr = array ();
 				for($i = 0; $i <= $_POST ['no_of_vt_fields']; $i ++) {
@@ -387,7 +384,7 @@ $content .= '</div>
 		$widgetContent = '<div class="left-side-content">
 <!--
         <form action="" method="POST" name="synccrmfields">
-                <input type="submit" class="button-secondary submit-add-to-menu" name="sync_crm_fields" value="Fetch CRM Fields"
+                <input type="submit" class="button-primary submit-add-to-menu" name="sync_crm_fields" value="Fetch CRM Fields"
 />
         </form>
 -->
@@ -414,23 +411,12 @@ $content .= '</div>
 
 			$widgetContent.= '</b> in widgets )</p></div><br/><br/>
 							<div style="margin-top:10px;">
-						<div style="padding:2px;"><input type="checkbox" id="skipduplicate" onclick="upgradetopro()" /> Skip Duplicates. Note: Email should be mandatory and enabled to make this work. </div>
+						<div style="padding:2px;clear:both;"><input type="checkbox" id="skipduplicate" onclick="upgradetopro()" /> Skip Duplicates. Note: Email should be mandatory and enabled to make this work. </div>
 						<div style="padding:2px;"><input type="checkbox" id="generateshortcode" onclick="upgradetopro()" /> Generate this Shortcode for widget form. </div>
 						<div style="padding:2px;">Assign Leads to User: <select id="assignto" onclick="upgradetopro()" ><option>Administrator</option><option>Standard User</option></select></div>
 					   </div><br/>
 							<input type="hidden" name="posted" value="Posted"> 
-							<label for="smack_vtlc_fields">Choose the fields you want to display in Widget Lead Capture page , Choose minimum fields</label><br/><br/>
-							<input type="button" class="button-secondary submit-add-to-menu" name="sync_crm_fields" value="Fetch CRM Fields"
-							onclick="upgradetopro()" />
-							<input type="submit" value="Save Field Settings" class="button-secondary submit-add-to-menu" 
-								name="Submit" />
-							<input type="button" class="button-secondary submit-add-to-menu" name="make_mandatory" 
-								id="make_mandatory" value="Save Mandatory Fields" onclick="upgradetopro()" /> 
-							<input type="button" class="button-secondary submit-add-to-menu" name="save_display_name" 
-								id="save_display_name" value="Save Labels" onclick="upgradetopro()" /> 
-							<input type="button" class="button-create-shortcode" name="create_shortcode" id="create_shortcode" 
-								value="Generate Shortcode" onclick="upgradetopro()" /><br/></br>
-
+							<label for="smack_vtlc_fields">Choose the fields you want to display in Widget Lead Capture page , Choose minimum fields</label><br/><br/>'.$this->getSubmitButtons().'
 							<table class="tableborder">
 								<tr class="smack_alt">
 									<th style="width: 50px;"><input type="checkbox" name="selectall" id="selectall"
@@ -482,8 +468,9 @@ $content .= '</div>
 				
 				$widgetContent .= '</td>
 								<td class="smack-field-td-middleit">';
-				
-				if (is_array($config_widget_field ['widgetfieldlist']) && in_array ( $field['fieldname'], $config_widget_field ['widgetfieldlist'] )) {
+			
+                                   	
+				if (isset($config_widget_field['widgetfieldlist']) && is_array($config_widget_field['widgetfieldlist']) && in_array ( $field['fieldname'], $config_widget_field['widgetfieldlist'] )) {
 					if ( $field['mandatory'] == 'true' ) {
 						$widgetContent .= '<img src="' . $imagepath . 'tick_strict.png" onclick="upgradetopro()" />';
 					} else {
@@ -496,27 +483,27 @@ $content .= '</div>
 				$widgetContent .= '</td>	<td class="smack-field-td-middleit">';
 				
 				if ($inc == 1) {
-					$widgetContent .= '<a class="smack_pointer" id="down' . $i . '" onclick="move(\'down\');">
+					$widgetContent .= '<a class="smack_pointer" id="down' . $key . '" onclick="move(\'down\');">
 									<img src="' . $imagepath . 'downarrow.png" /></a>';
 				} elseif ($inc == $nooffields) {
-					$widgetContent .= '<a class="smack_pointer" id="up' . $i . '" onclick="move(\'up\');">
+					$widgetContent .= '<a class="smack_pointer" id="up' . $key . '" onclick="move(\'up\');">
 									<img src="' . $imagepath . 'uparrow.png" /></a>';
 				} else {
-					$widgetContent .= '<a class="smack_pointer" id="down' . $i . '" onclick="move(\'down\');">
+					$widgetContent .= '<a class="smack_pointer" id="down' . $key . '" onclick="move(\'down\');">
 									<img src="' . $imagepath . 'downarrow.png" /></a> 
-									<a class="smack_pointer" id="up' . $i . '" onclick="move(\'up\');">
+									<a class="smack_pointer" id="up' . $key . '" onclick="move(\'up\');">
 									<img src="' . $imagepath . 'uparrow.png" /></a>';
 				}
 				
 				$widgetContent .= '</td>	<td class="smack-field-td-middleit">
-								<input type="checkbox" name="check' . $i . '" id="check' . $i . '"';
+								<input type="checkbox" name="check' . $key . '" id="check' . $key . '"';
 				
 				if ( $field['mandatory'] == 'true' ) {
 					$widgetContent .= ' checked="checked" disabled ';
 				}
 				
-				$widgetContent .= '/></td>	<td class="smack-field-td-middleit" id="field_label_display_td' . $i . '">
-								<input type="text" id="field_label_display_textbox' . $i . '" class="readonly-text" onclick="upgradetopro()" 
+				$widgetContent .= '/></td>	<td class="smack-field-td-middleit" id="field_label_display_td' . $key . '">
+								<input type="text" id="field_label_display_textbox' . $key . '" class="readonly-text" onclick="upgradetopro()" 
 										value="' . $field['fieldlabel'] . '" readonly /></td>
 								</tr>';
 				$inc ++;
@@ -528,7 +515,7 @@ $content .= '</div>
 								</table>
 								<p class="submit">Please use the short code <b> [zoho_crm_lead_widget_area]</b> in widgets
 								</p>
-								<input type="hidden" name="widget_field_posted" value="Posted" />
+								<input type="hidden" name="widget_field_posted" value="Posted" />'.$this->getSubmitButtons().'
 								</form>
 							</div>
 							<div class="right-side-content" >'.$this->wpzohocrm_rightContent().'					
@@ -537,10 +524,23 @@ $content .= '</div>
 			echo $widgetContent;
 		} else {
 			$widgetContent = "<div style='margin-top:20px;font-weight:bold;'>
-					Please enter a valid database <a href=".admin_url()."admin.php?page=wp-tiger&action=plugin_settings>settings</a>
+					Please Click a Fetch CRM Fields <a href=".admin_url()."admin.php?page=wp-zoho-crm&action=plugin_settings>settings</a> Page
 					</div>";
 			echo $widgetContent;
 		}
+	}
+
+	function getSubmitButtons(){
+		return '<input type="button" class="button-primary submit-add-to-menu" name="sync_crm_fields" value="Fetch CRM Fields"
+                                                        onclick="upgradetopro()" />
+                                                        <input type="submit" value="Save Field Settings" class="button-primary submit-add-to-menu" 
+                                                                name="Submit" />
+                                                        <input type="button" class="button-primary submit-add-to-menu" name="make_mandatory" 
+                                                                id="make_mandatory" value="Save Mandatory Fields" onclick="upgradetopro()" /> 
+                                                        <input type="button" class="button-primary submit-add-to-menu" name="save_display_name" 
+                                                                id="save_display_name" value="Save Labels" onclick="upgradetopro()" /> 
+                                                        <input type="button" class="button-create-shortcode" name="create_shortcode" id="create_shortcode" 
+                                                                value="Generate Shortcode" onclick="upgradetopro()" /><br/></br>';
 	}
 
 	/**
@@ -616,22 +616,22 @@ $content .= '</div>
 
 				$content .= '</b> in page or post )</p></div><br/><br/>
 				<div style="margin-top:10px;">
-				<div style="padding:2px;"><input type="checkbox" id="skipduplicate" onclick="upgradetopro()" /> Skip Duplicates. Note: Email should be mandatory and enabled to make this work. </div>
+				<div style="padding:2px;clear:both;"><input type="checkbox" id="skipduplicate" onclick="upgradetopro()" /> Skip Duplicates. Note: Email should be mandatory and enabled to make this work. </div>
 				<div style="padding:2px;"><input type="checkbox" id="generateshortcode" onclick="upgradetopro()" /> Generate this Shortcode for widget form. </div>
 				<div style="padding:2px;">Assign Leads to User: <select id="assignto" onclick="upgradetopro()" ><option>Administrator</option><option>Standard User</option></select></div>
 				</div><br/>
 
 			<input type="hidden" name="posted" value="posted" />
 			<label for="smack_vtlc_fields">Choose the fields you want to display in Lead Capture page.</label><br/><br/>
-			<input type="button" class="button-secondary submit-add-to-menu"
+			<input type="button" class="button-primary submit-add-to-menu"
 				name="sync_crm_fields" value="Fetch CRM Fields"
 				onclick="upgradetopro()" />
 			<input type="submit" value="Save Field Settings"
-				class="button-secondary submit-add-to-menu" name="Submit" />
-			<input type="button" class="button-secondary submit-add-to-menu"
+				class="button-primary submit-add-to-menu" name="Submit" />
+			<input type="button" class="button-primary submit-add-to-menu"
 				name="make_mandatory" id="make_mandatory"
 				value="Save Mandatory Fields" onclick="upgradetopro()" /> <input
-				type="button" class="button-secondary submit-add-to-menu"
+				type="button" class="button-primary submit-add-to-menu"
 				name="save_display_name" id="save_display_name" value="Save Labels"
 				onclick="upgradetopro()" /> <input type="button"
 				class="button-create-shortcode" name="create_shortcode"
@@ -712,27 +712,27 @@ $content .= '</div>
 				$content .= '</td>
 					<td class="smack-field-td-middleit">';
 				if($inc == 1){ 
-					$content .= '<a class="smack_pointer" id="down'.$i.'" onclick="move(\'down\');"><img
+					$content .= '<a class="smack_pointer" id="down'.$key.'" onclick="move(\'down\');"><img
 								src="'.$imagepath.'downarrow.png" /></a>';
 				} elseif($inc == $nooffields){ 
-					$content .= '<a class="smack_pointer" id="up'.$i.'" onclick="move(\'up\');"><img
+					$content .= '<a class="smack_pointer" id="up'.$key.'" onclick="move(\'up\');"><img
 								src="'.$imagepath.'uparrow.png" /></a>';
 				}else{ 
-					$content .= '<a class="smack_pointer" id="down'.$i.'" onclick="move(\'down\');"><img
+					$content .= '<a class="smack_pointer" id="down'.$key.'" onclick="move(\'down\');"><img
 								src="'.$imagepath.'downarrow.png" /></a> <a
-							class="smack_pointer" id="up'.$i.'" onclick="move(\'up\');"><img
+							class="smack_pointer" id="up'.$key.'" onclick="move(\'up\');"><img
 								src="'.$imagepath.'uparrow.png" /></a>';
 				} 
 				$content .= '</td>
 						<td class="smack-field-td-middleit"><input type="checkbox"
-							name="check'.$i.'" id="check'.$i.'"';
+							name="check'.$key.'" id="check'.$key.'"';
 						 if( $field['mandatory'] == "true" ){ 
 							$content .= 'checked="checked" disabled';
 						 } 
 				$content .=' /></td>
 						<td class="smack-field-td-middleit"
-							id="field_label_display_td'.$i.'"><input type="text"
-							id="field_label_display_textbox'.$i.'" class="readonly-text" onclick="upgradetopro()"
+							id="field_label_display_td'.$key.'"><input type="text"
+							id="field_label_display_textbox'.$key.'" class="readonly-text" onclick="upgradetopro()"
 							value="'.$field['fieldlabel'].'" readonly /></td>
 					</tr>';
 				$inc++;
@@ -743,7 +743,7 @@ $content .= '</div>
 			</table>
 			<p>Please use the short code <b> [zoho_crm_lead_page]</b> in page or post</p>
 			<input type="hidden" name="field_posted"
-				value="posted" />
+				value="posted" />'.$this->getSubmitButtons().'
 
 		</form>
 	</div>
@@ -752,7 +752,7 @@ $content .= '</div>
 		echo $content;
 		} else{
 			$Content = "<div style='margin-top:20px;font-weight:bold;'>
-					Please enter a valid database <a href=".admin_url()."admin.php?page=wp-tiger&action=plugin_settings>settings</a>
+					Please click Fetch CRM Fields <a href=".admin_url()."admin.php?page=wp-zoho-crm&action=plugin_settings>settings</a>Page
 					</div>";
 			echo $Content;
 		}

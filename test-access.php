@@ -64,6 +64,12 @@ if(isset($_REQUEST['adminAction']) && ($_REQUEST['adminAction'] == 'getAuthkey')
 	{
 		$return_array['result'] = $return_result['1'];
 	}
+	if($return_result[1] == 'FALSE'){
+		$return_cause = explode("=",$anArray[2]);
+		$cmp2 = strcmp($return_cause[0],'CAUSE');
+		if($cmp2 == 0)
+			$return_array['cause'] = $return_cause[1];
+	}
 	echo json_encode($return_array);
 	curl_close($ch);
 }

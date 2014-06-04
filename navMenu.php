@@ -54,12 +54,14 @@ function wp_zoho_crm_topnavmenu() {
 	if (is_array ( $wpzohocrmmenus )) {
 		foreach ( $wpzohocrmmenus as $links => $text ) {
 			if (! isset ( $_REQUEST ['action'] ) && ($links == "plugin_settings")) {
-				$class = "wptiger-free-navigation-menu-link-active";
+				$class = "button-secondary";
 			}
 			elseif (isset( $_REQUEST['action'] ) && ($_REQUEST ['action'] == $links) ) {
-				$class = "wptiger-free-navigation-menu-link-active";
+				$class = "button-secondary";
 			}
-			$top_nav_menu .= "<li class='wptiger-free-navigation-menu'><a class='wptiger-free-nav-menu-link $class' href='?page=wp-zoho-crm&action={$links}'>{$text}</a></li>";
+                          else 
+                               $class="button-primary";
+			$top_nav_menu .= "<li class='wptiger-free-navigation-menu'><a class='wptiger-free-nav-menu-link' href='?page=wp-zoho-crm&action={$links}'><button class='$class' type='button'>{$text}</button></a></li>";
 			$class = "";
 		}
 	}

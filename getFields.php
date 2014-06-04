@@ -45,8 +45,10 @@
 
         $config = get_option ( 'smack_zoho_crm_settings' );
 	$i = 0;
+        $j=0;
 	$Result_Array = $SmackZohoApiObj->APIMethod("Leads" , "getFields", $config['authkey']);
 	foreach($Result_Array['section'] as $section ){
+		if(!empty($section['FL']))
 		foreach($section['FL'] as $key => $fields )
 		{
 			if( $key === '@attributes' )

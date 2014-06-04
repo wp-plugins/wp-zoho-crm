@@ -52,7 +52,7 @@ class SmackZohoApi{
 		$uri = $this->zohocrmurl . $modulename . "/".$methodname."";
 
 		/* Append your parameters here */
-		$postContent .= "scope=crmapi";
+		$postContent = "scope=crmapi";
 		$postContent .= "&authtoken={$authkey}";//Give your authtoken
 
 		$ch = curl_init($uri);
@@ -72,7 +72,7 @@ class SmackZohoApi{
 //		$method = "insertRecords";
 //		
                 /* Append your parameters here */
-                $postContent .= "scope=crmapi";
+                $postContent = "scope=crmapi";
                 $postContent .= "&authtoken={$authkey}";//Give your authtoken
 		$postContent .= "&xmlData={$xmlData}";
                 $ch = curl_init($uri);

@@ -103,7 +103,7 @@ cursor: pointer;
 
 .wptiger-free-top-navigation-wrapper
 {
-width:65%;
+width:55%;
       border-bottom: 2px solid #BCD5E1;
 display: block;
 height: 27px;
@@ -118,7 +118,7 @@ margin: -8px;
 padding: 0;
 }
 
-#wptiger-free-top-navigation li {
+/*#wptiger-free-top-navigation li {
 	-moz-border-bottom-colors: none;
 	-moz-border-left-colors: none;
 	-moz-border-right-colors: none;
@@ -130,7 +130,7 @@ padding: 0;
 	border-width: 2px 2px 0;
 float: left;
        margin-left: 8px;
-}
+}*/
 
 .wptiger-free-nav-menu-link
 {
@@ -139,7 +139,7 @@ float: left;
 background: none repeat scroll 0 0 #E8F1F5;
 color: #103A4D;
 display: block;
-padding: 0.75em 1em;
+padding: 0.75em .5em;
 	 text-align: center;
 	 text-decoration: none;
 }
@@ -206,7 +206,7 @@ height: 130px;
 .wptiger-box-inside {
 border: 1px solid #EEEEEE;
 	line-height: 1.5;
-	margin-top: -14px;
+	margin-top: -8px;
 padding: 10px;
 }
 

@@ -25,6 +25,8 @@ function captureAlreadyRegisteredUsersWpTiger() {
 }
 
 function testZohoCrmCredentials(siteurl) {
+          
+	document.getElementById('vt_fields_container').style.display="inline";
 	jQuery.ajax({
 		type: 'POST',
 		url: ajaxurl,
@@ -38,18 +40,35 @@ function testZohoCrmCredentials(siteurl) {
 			var jsonData = JSON.parse(data);
 			if(jsonData['result'] == "TRUE")
 			{
-				alert("Username, Password credentials are correct");
 				jQuery("#authkey").val(jsonData['authToken']);
+				jQuery( "#smack_vtlc_form" ).submit();
+	document.getElementById('error_msg').innerHTML = "Settings Saved";
+	document.getElementById('error_msg').style.color = "green";
+	document.getElementById('vt_fields_container').style.display = "none ";
+                                
 			}
 			else
 			{
-				alert("Check Username, Password" );
+
+				if(jsonData['cause'] == 'EXCEEDED_MAXIMUM_ALLOWED_AUTHTOKENS') {
+                                   jQuery("#error_msg").html("Please log in to <a target='_blank' href='https://accounts.zoho.com'>https://accounts.Zoho.com</a> - Click Active Authtoken - Remove unwanted Authtoken, so that you could generate new authtoken..").css("color","red");
+	document.getElementById('vt_fields_container').style.display= "none ";
+				//	alert("Please log in to https://accounts.zoho.com - Click Active Authtoken - Remove unwanted Authtoken, so that you could generate new authtoken..");
+			          }	
+                             else{
+				     jQuery("#error_msg").html("Please Verify Username and Password." ).css("color","red");
+	document.getElementById('vt_fields_container').style.display = "none";
+                }
 			}
-		},
+			},
 		error: function(errorThrown){
 		    console.log(errorThrown);
 		}
 	});
+}
+
+function sync_zoho(){
+           jQuery("#zoho_fetch").css('display','inline');
 }
 
 function upgradetopro() {
