@@ -14,7 +14,7 @@ An easy, automated and advanced CRM Zoho web form generator for Wordpress to cap
 
 == Description ==
 
-Version 1.1.1 is available. Users who faced zoho credential issues due to auth token run outs can be solved now, read the faq for details.
+Version 1.1.0 is available. Users who faced zoho credential issues due to auth token run outs can be solved now, read the faq for details.
 
 CRM Zoho integration for Wordpress is a plugin for capturing leads from form page/post and contacts from user registration to CRM Zoho directly from WordPress developed by Smackcoder. WP Zoho CRM is a simple, advanced, easy to set up CRM Zoho web forms generator for Wordpress. It helps to generate a web form via user friendly plugin interface which in turn used as a contact form to convert your traffic/visitors as high potential leads to CRM Zoho CRM. 
 
