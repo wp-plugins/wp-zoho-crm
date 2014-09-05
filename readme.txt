@@ -2,8 +2,8 @@
 Contributors: smackcoders
 Tags: crm, admin, administration, automatic, contact, form, list, newsletter, plugin, shortcode, sidebar, widget, widgets, wordpress, crm, Zoho CRM, lead, wp Zoho CRM, CRM Zoho, lead capture, form generator, form builder, contact sync, vtigercrm, optin form, form
 
-Requires at least: 3.5
-Tested up to: 3.9.1
+Requires at least: 3.6
+Tested up to: 4.0
 Stable tag: 1.1.0
 Version: 1.1.0
 Author: smackcoders
