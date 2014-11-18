@@ -52,8 +52,21 @@ class SmackWPZohoCrm {
         add_action ( 'admin_enqueue_scripts', 'LoadWpZohoCrmScript' );
         add_action ( 'admin_menu', 'wpzohocrmmenu' );
         add_action ( 'user_register', 'wp_zoho_crm_capture_registering_users' );
-        add_action ( 'after_plugin_row_wp-tiger/wp-zoho-crm.php', array('SmackWPZohoCrm', 'plugin_row') );
-        add_filter ( 'plugin_action_links_wp-tiger/wp-zoho-crm.php', array('SmackWPZohoCrm', 'plugin_settings_link'),10,2);
+        add_action ( 'after_plugin_row_wp-zoho-free/wp-zoho-crm.php', array('SmackWPZohoCrm', 'plugin_row') );
+        add_filter ( 'plugin_action_links_wp-zoho-free/wp-zoho-crm.php', array('SmackWPZohoCrm', 'plugin_settings_link'),10,2); 
+	add_filter( 'custom_menu_order', '__return_true' );
+	add_filter( 'menu_order', array('SmackWPZohoCrm', 'smackzohocrm_change_menu_order') );
+    }
+
+    // Move Pages above Media
+    public static function smackzohocrm_change_menu_order( $menu_order ) {
+	    return array(
+			    'index.php',
+			    'edit.php',
+			    'edit.php?post_type=page',
+			    'upload.php',
+			    'wp-zoho-crm',
+			);
     }
 
     /*
@@ -74,7 +87,7 @@ class SmackWPZohoCrm {
      * @$plugin_name as string
      */
     public static function plugin_row($plugin_name){
-        echo '</tr><tr class="plugin-update-tr"><td colspan="3" class="plugin-update"><div class="update-message"> Now get 25% discount for purchasing pro version using the coupon "<b>OFF25WPTIGER</b>" <a href="http://www.smackcoders.com/wp-vtiger-pro.html">Purchase pro version now!</a></div></td>';
+        echo '</tr><tr class="plugin-update-tr"><td colspan="3" class="plugin-update"><div class="update-message"> Please migrate to our new plugin <a href="https://wordpress.org/plugins/wp-leads-builder-any-crm/" target="blank" >Leads Builder For Any CRM</a> for advanced features.</div></td>';
     }
 
 }

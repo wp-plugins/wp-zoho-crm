@@ -49,7 +49,8 @@ $wpzohocrmmenus = array (
 function wp_zoho_crm_topnavmenu() {
 	global $wpzohocrmmenus;
 	$class = "";
-	$top_nav_menu = "<div id='wptiger-free-top-navigation' class= 'wptiger-free-top-navigation-wrapper'>";
+	$top_nav_menu = '<div class="update-message" style="text-align:center;">Please migrate to our new plugin <a href="https://wordpress.org/plugins/wp-leads-builder-any-crm/" target="blank">Leads Builder For Any CRM</a> for advanced features.</div>';
+	$top_nav_menu .= "<div id='wptiger-free-top-navigation' class= 'wptiger-free-top-navigation-wrapper'>";
 	$top_nav_menu .= "<ul class='wptiger-free-Navigation-menu-bar'>";
 	if (is_array ( $wpzohocrmmenus )) {
 		foreach ( $wpzohocrmmenus as $links => $text ) {

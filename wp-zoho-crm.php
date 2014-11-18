@@ -4,7 +4,7 @@
 Plugin Name: WP Zoho Crm
 Plugin URI: http://www.smackcoders.com
 Description: Easy Lead capture Zoho Crm Webforms and Contacts synchronization
-Version: 1.1.0
+Version: 1.1.1
 Author: smackcoders.com
 Author URI: http://www.smackcoders.com
 
@@ -50,6 +50,13 @@ global $plugin_url_wp_zoho_crm ;
 $plugin_url_wp_zoho_crm = plugins_url( '' , __FILE__ );
 global $plugin_dir_wp_zoho_crm;
 $plugin_dir_wp_zoho_crm = plugin_dir_path( __FILE__ );
+
+$get_debug_mode = get_option('smack_zoho_crm_settings');
+	
+if(isset($get_debug_mode['debug_mode']) && ($get_debug_mode['debug_mode'] != 'on')) {
+	error_reporting(0);
+	ini_set('display_errors', 'Off');
+}
 
 require_once( "{$plugin_dir_wp_zoho_crm}/SmackWPZohoCrm.php");
 require_once( "{$plugin_dir_wp_zoho_crm}/smack-zohocrm-shortcodes.php");

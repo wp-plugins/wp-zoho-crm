@@ -2,10 +2,10 @@
 Contributors: smackcoders
 Tags: crm, admin, administration, automatic, contact, form, list, newsletter, plugin, shortcode, sidebar, widget, widgets, wordpress, crm, Zoho CRM, lead, wp Zoho CRM, CRM Zoho, lead capture, form generator, form builder, contact sync, vtigercrm, optin form, form
 
-Requires at least: 3.6
+Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.1.0
-Version: 1.1.0
+Stable tag: 1.1.1
+Version: 1.1.1
 Author: smackcoders
 Donate link: http://www.smackcoders.com/donate.html
 License: GPLv2 or later
@@ -14,7 +14,9 @@ An easy, automated and advanced CRM Zoho web form generator for Wordpress to cap
 
 == Description ==
 
-Version 1.1.0 is available. Users who faced zoho credential issues due to auth token run outs can be solved now, read the faq for details.
+= [WP Zoho CRM](https://wordpress.org/plugins/wp-zoho-crm/) plugin is now part of [WP Leads Builder For Any CRM](https://wordpress.org/plugins/wp-leads-builder-any-crm), a combined plugins for all CRM like [wp tiger](https://wordpress.org/plugins/wp-tiger/), [wp sugar free](https://wordpress.org/plugins/wp-sugar-free/), [wp zoho](https://wordpress.org/plugins/wp-zoho-crm/) plugins with more features. Users are advised to download the new plugins no future updates or support will be available for this plugin. =
+
+Version 1.1.11 is available with debug mode enable and disable options in settings along with menu changes. Users who faced zoho credential issues due to auth token run outs can be solved now, read the faq for details.
 
 CRM Zoho integration for Wordpress is a plugin for capturing leads from form page/post and contacts from user registration to CRM Zoho directly from WordPress developed by Smackcoder. WP Zoho CRM is a simple, advanced, easy to set up CRM Zoho web forms generator for Wordpress. It helps to generate a web form via user friendly plugin interface which in turn used as a contact form to convert your traffic/visitors as high potential leads to CRM Zoho CRM. 
 
@@ -61,7 +63,12 @@ Feel free to request for the new features. Requested features will be added in n
  
 == Changelog ==
 
-= 1.1.1 =
+= 1.1.1 = 
+ - Features moved to new combined plugin [Leads Builder For Any CRM](https://wordpress.org/plugins/wp-leads-builder-any-crm)
+ - Added: Debug mode enable/disable options.
+ - Modified: Menu order changes.
+
+= 1.1.0 =
  - Improved UI for better usability
  - Compatible with 3..9.1 and php 5.4
  - Warnings and minor bug fixes
@@ -73,6 +80,9 @@ This is the basic version. Tested and found works well without any issues.
 
 
 == Upgrade Notice ==
+
+= 1.1.1 = 
+Now users are advised to migrate to new plugin with more features.
 
 = 1.1.0 =
 Upgrade now for Bug fixes and improvements

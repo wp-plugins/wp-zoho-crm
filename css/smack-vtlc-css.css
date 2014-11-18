@@ -103,8 +103,8 @@ cursor: pointer;
 
 .wptiger-free-top-navigation-wrapper
 {
-width:55%;
-      border-bottom: 2px solid #BCD5E1;
+width:60%;
+      /*border-bottom: 2px solid #BCD5E1; */
 display: block;
 height: 27px;
 	margin-bottom: 20px;

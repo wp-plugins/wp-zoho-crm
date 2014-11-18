@@ -199,6 +199,7 @@ class SmackWPZohoCrmAdminPages{
 				'password' => __('Password'),
 				'authkey' => __('Authenticataion Key'),
 				'wp_zoho_crm_smack_user_capture' => __('Capture User'),
+				'debug_mode' => __('Debug Mode')
 			);
 		if(isset($_REQUEST['sync_crm_fields']) && ($_REQUEST['sync_crm_fields'] == "Fetch CRM Fields"))
                 {
@@ -211,7 +212,7 @@ class SmackWPZohoCrmAdminPages{
 			foreach ( $fieldNames as $field => $value ) {
 				$config [$field] = $_POST [$field];
 			}
-			
+	
 			update_option ( 'smack_zoho_crm_settings', $config );
 			$wp_tiger_contact_form_attempts = get_option( 'wp-zoho-contact-form-attempts' );
 			$wp_tiger_contact_widget_form_attempts = get_option( 'wp-zoho-contact-widget-form-attempts' );
@@ -230,6 +231,7 @@ class SmackWPZohoCrmAdminPages{
 
 		$siteurl = site_url ();
 		$config = get_option ( 'smack_zoho_crm_settings' );
+
 		$config_field = get_option ( "smack_zoho_crm_field_settings" );
 		
 		$content = '<div style="width:95%"><span id="error_msg"></span>
@@ -292,6 +294,9 @@ class SmackWPZohoCrmAdminPages{
 		$content .= '>
 						</td>
 						</tr>
+							</div>
+						</td>
+						</tr>
 						<!--<tr>
 							<td>
 								<div style="float: left">Sync WP members to VtigerCRM contacts</div>
@@ -305,7 +310,23 @@ class SmackWPZohoCrmAdminPages{
 						</tr>-->
 						
 						</table>
-						
+						<table>
+						<tr>
+						<td>
+						    <div class="debug">
+							<h3 id="innertitle">Debug Mode</h3>
+							<div style="float: left"><label>You can enable/disable the debug mode:</label></div>
+							<div style="float: right; padding-left: 28px;">: <input style="position:relative;top:3px;" type="checkbox" class="" name="debug_mode" id="debug_mode" '; 
+ 						    
+		if($config["debug_mode"] == "on"){
+			$content .= "checked";
+	
+		}
+		$content .= '>
+							</div>
+						</td>
+						</tr>
+						</table>
 						</div>
 						<input type="hidden" name="posted" value="Posted">
 						<p class="submit">
