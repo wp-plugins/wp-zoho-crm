@@ -14,7 +14,7 @@ An easy, automated and advanced CRM Zoho web form generator for Wordpress to cap
 
 == Description ==
 
-= [WP Zoho CRM](https://wordpress.org/plugins/wp-zoho-crm/) plugin is now part of [WP Leads Builder For Any CRM](https://wordpress.org/plugins/wp-leads-builder-any-crm), a combined plugins for all CRM like [wp tiger](https://wordpress.org/plugins/wp-tiger/), [wp sugar free](https://wordpress.org/plugins/wp-sugar-free/), [wp zoho](https://wordpress.org/plugins/wp-zoho-crm/) plugins with more features. Users are advised to download the new plugins no future updates or support will be available for this plugin. =
+[WP Zoho CRM](https://wordpress.org/plugins/wp-zoho-crm/) plugin is now part of [WP Leads Builder For Any CRM](https://wordpress.org/plugins/wp-leads-builder-any-crm), a combined plugins for all CRM like [wp tiger](https://wordpress.org/plugins/wp-tiger/), [wp sugar free](https://wordpress.org/plugins/wp-sugar-free/), [wp zoho](https://wordpress.org/plugins/wp-zoho-crm/) plugins with more features. Users are advised to download the new plugins no future updates or support will be available for this plugin.
 
 Version 1.1.11 is available with debug mode enable and disable options in settings along with menu changes. Users who faced zoho credential issues due to auth token run outs can be solved now, read the faq for details.
 
